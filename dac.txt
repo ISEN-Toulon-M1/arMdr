@@ -17,10 +17,15 @@ On charge la valeur dans le registre DHRx
 Process
 
 _ choix du convertisseur DAC 
-_ 8 ou 12 bits => 12
+_ 8 ou 12 bits => 12 DAC_DHR12Rx [11:0]
 _ Alignement à droite
 _ Pas de trigger
 _ Pas de DMA
 _ Pas de bruit
 _ pas d'onde triangulaire
 _ Entrée supplémentaire Vref
+
+DAC control Register (DAC_CR)
+BOFFx => autorise ou pas la présence d'un buffer en sortie => activé le buffer 
+ENx =>   Activer le DAC
+=> ecrire dans le bon registre la valeur a convertir
