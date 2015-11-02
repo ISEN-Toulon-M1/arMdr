@@ -2,38 +2,44 @@ void ConfigADC()
 {
   /*activation de l'horloge sur l'ADC*/
   RCC->APB2ENR |= (1<<9);
+  
+  /*PC0 en analogique*/
+    GPIOC_MODER = 0x03;
   /*activation de la HSI CLOCK*/
   RCC->CR |= (1<<0);
   /*choix du prescalaire*/
-  ADC->CCR =1;
+  ADC1->CCR &=(~((1<<16)|(1<<17)));
+  /*activation de l'horloge sur le RI (COMPEN)*/
+   RCC->APB1ENR |= (1<<31);
 }
- 
-uint16_t read_ADC(uint16_t chan)
-{  
-    uint16_t conv;
+
+uint16_t  litADC()
+{
+  
+   uint16_t conv;
+      
     ADC1->CR2 &= ~(1<<0);
-  /*1 seul  canal de conversion*/
-  ADC1->SQR1 &=(~((1<<24)|(1<<23)|(1<<22)|(1<<21)));
-    ADC1->SQR5 = 0x00;
-    ADC1->SQR5 |=chan;
+    ADC1->CR1 &= ~((1<<25)|(1<<24)); //resolution
+ 
+    /*Canal de conversion*/
+    ADC1->SQR1 &= ~((1<<24) | (1<<23) | (1<<22) | (1<<21) | (1<<20)) ;
+    ADC1->SQR5 |=0xA;
+    
     /*Routage interfacing*/
-    /* Création Lien PC0 à l'ADC*/
-    RI->ASCR1 |=(1<<10);
-    /*activation de l'horloge sur le RI (COMPEN)*/
-    RCC->APB1ENR |= (1<<31);
-    /*route PA0 sur ADC_IN0 de l'ADC1*/
-    RI->ASCR1|=(1<<chan);
-   
-    /*activation de l'adc*/
+    RI_ASCR1->|=(1<<10);
+    
+    /*Scan mode*/
+    ADC1->CR1&= ~(1<<8);
+        
+    /* ADON = 1 */
     ADC1->CR2 |= (1<<0);
-   
-    /*tant que le periph n'est pas pret j' attends*/
+    /*SI ADON = 0, rien faire */
     while((ADC1->SR &(1<<6)) == 0);
-    /*lancement conversion*/
+    /*swstart = 1 -> debut de conversion*/
     ADC1->CR2 |= (1<<30);
-    /*tant que la conversion n'est pas finie j' attends*/
-     while((ADC1->SR &(1<<1)) == 0);
-    conv= ADC1->DR;
-    return conv;
-   
-}
+    /*eoc à 1 -> conversion réalisé */
+    while((ADC1->SR &(1<<1)) == 0);  //
+    val = ADC1->DR;
+    return val;
+  
+ }
