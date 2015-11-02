@@ -18,7 +18,7 @@ uint16_t read_ADC(uint16_t chan)
     ADC1->SQR5 |=chan;
     /*Routage interfacing*/
     /* Création Lien PC0 à l'ADC*/
-    RI_ASCR1->CH10 |=(1<<10);
+    RI->ASCR1 |=(1<<10);
     /*activation de l'horloge sur le RI (COMPEN)*/
     RCC->APB1ENR |= (1<<31);
     /*route PA0 sur ADC_IN0 de l'ADC1*/
