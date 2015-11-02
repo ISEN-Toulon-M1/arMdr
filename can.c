@@ -21,8 +21,7 @@ uint16_t read_ADC(uint16_t chan)
     RI->ASCR1 |=(1<<10);
     /*activation de l'horloge sur le RI (COMPEN)*/
     RCC->APB1ENR |= (1<<31);
-    /*route PA0 sur ADC_IN0 de l'ADC1*/
-    RI->ASCR1|=(1<<chan);
+    
    
     /*activation de l'adc*/
     ADC1->CR2 |= (1<<0);
