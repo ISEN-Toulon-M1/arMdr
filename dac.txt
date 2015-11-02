@@ -1,0 +1,26 @@
+Digital Analog Converter
+
+DAoutput = Vref * DOR / 4095 
+
+Vref = tension de référence
+
+DOR = Valeur sur 12 bits(en fcn de la résolution(8 ou 12)) à transformer en tension
+
+On a 2 convertisseurs à notre disposition
+
+On n'utilise pas le DMA, ni de triggers
+
+On peut générer du bruit et des signaux de type triangulaire
+
+On charge la valeur dans le registre DHRx
+
+Process
+
+_ choix du convertisseur DAC 
+_ 8 ou 12 bits => 12
+_ Alignement à droite
+_ Pas de trigger
+_ Pas de DMA
+_ Pas de bruit
+_ pas d'onde triangulaire
+_ Entrée supplémentaire Vref
