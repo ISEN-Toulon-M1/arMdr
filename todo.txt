@@ -1,0 +1,22 @@
+	1. Activer l'horloge HSI et ajuster le préscalaire au temps de conversion désiré
+	2. Configurer le canal d'acquisition :
+			i. Au niveau de l'adc (il est obligatoire d'aller écrire dans l'un des registres de choix du canal) ADC in
+			ii. Au niveau du GPIO
+			iii. Au niveau du RI (routage interfacing)
+	3. Configurer le type d'acquisition réalisé:
+			i. Mode simple
+			ii. Scan  non
+			iii. Regular channel 
+			iv. La conversion est-elle déclenchée par un signal ? nein
+	4. Configurer les interruptions si besoin (ADC et NVIC)*
+	5. Activer l'ADC
+	6. Lancer la conversion en respectant le chronogramme vu avant (penser à attendre les acknowledges entre chaque étape)
+
+GPIOC -> PC0 en analogique relier pc0 à l'adc
+
+PC0 -> fermer le switch pour qu'il soit utilisé par l'ADC
+
+Interruption toutes les µs : acquisition et le donner au CAN
+Addons à 1
+Interruption : swstart 1 
+Finc onversion : eoc à 1
