@@ -7,3 +7,8 @@ DAC->CR1 = (1<<1)
 DAC->CR1 = (1<<0)
 
 }
+
+void Use_DAC ()
+{
+  // Charger la valeur de la tension dans DHRx
+}
