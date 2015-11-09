@@ -1,5 +1,7 @@
 void ConfigADC()
 {
+  /* Activation de l'horloge sur l'ADC*/
+  RCC->APB2ENR |= (1<<9);
   /* PC0 en analogique*/
   GPIOC->MODER=0x03;
   /*activation de la HSI CLOCK*/
