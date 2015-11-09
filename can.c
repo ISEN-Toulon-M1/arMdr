@@ -10,12 +10,7 @@ void ConfigADC()
   ADC->CCR &=(~((1<<16)|(1<<17)));
   /*activation de l'horloge sur le RI */
   RCC->APB1ENR |= (1<<31);
-}
- 
-uint16_t read_ADC()
-{  
-    uint16_t conv;
-    ADC1->CR2 &= ~(1<<0);
+  ADC1->CR2 &= ~(1<<0);
     /*1 seul  canal de conversion*/
     ADC1->SQR5 |=0x0A;
     /*Routage interfacing*/
@@ -31,6 +26,11 @@ uint16_t read_ADC()
    
     /*Attendre ADON*/
     while((ADC1->SR &(1<<6)) == 0);
+}
+ 
+uint16_t read_ADC()
+{  
+    uint16_t conv;
     /*lancer la conversion*/
     ADC1->CR2 |= (1<<30);
     /*Attendre la conversion*/
